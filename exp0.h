@@ -11,6 +11,8 @@
 #ifndef EXP0_H
 #define EXP0_H
 
+#include <stdint.h>
+
 /******** Configuration ********/
 
 #ifndef EXP0_INCLUDE_CONFIG
@@ -34,6 +36,10 @@
 #endif
 
 /******** Macros ********/
+
+#define EXP0_VERSION_MAJOR   0
+#define EXP0_VERSION_MINOR   1
+#define EXP0_VERSION_BUILD   0
 
 #if (EXP0_USE_DOUBLE && EXP0_PROVIDE_GENERICS)
 # define exp0_func(x0, y0, slope) \
@@ -75,6 +81,12 @@ typedef struct exp0_func_double {
 } exp0_func_double_st;
 #endif
 
+typedef struct exp0_version {
+	uint8_t    major;
+	uint8_t    minor;
+	uint16_t   build;
+} exp0_version_st;
+
 /******** Function Prototypes ********/
 
 exp0_func_st
@@ -93,6 +105,16 @@ exp0_default_kt exp0_eval (exp0_func_st func, exp0_default_kt x);
 float    exp0_eval_float    (exp0_func_float_st    func, float    x);
 double   exp0_eval_double   (exp0_func_double_st   func, double   x);
 #endif
+
+/******** Inline Function Definitions ********/
+
+inline exp0_version_st exp0_version (void) {
+	return (exp0_version_st){
+		EXP0_VERSION_MAJOR,
+		EXP0_VERSION_MINOR,
+		EXP0_VERSION_BUILD,
+	};
+}
 
 #endif // EXP0_H
 
