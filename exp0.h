@@ -41,50 +41,6 @@
 #define EXP0_VERSION_MINOR   1
 #define EXP0_VERSION_BUILD   0
 
-#if (EXP0_USE_DOUBLE && EXP0_PROVIDE_GENERICS)
-
-# define exp0(x) \
-	_Generic((x), \
-		double:    exp0, \
-		float:     exp0f, \
-		default:   exp0 \
-	)(x)
-
-# define log0(x) \
-	_Generic((x), \
-		double:    log0, \
-		float:     log0f, \
-		default:   log0 \
-	)(x)
-
-# define exp0_func(x0, y0, slope) \
-	_Generic((x0)*(y0)*(slope), \
-		double:    exp0_double_func, \
-		float:     exp0_float_func, \
-		default:   exp0_func \
-	)(x0, y0, slope)
-
-# define log0_func(x0, y0, slope) \
-	_Generic((x0)*(y0)*(slope), \
-		double:    log0_double_func, \
-		float:     log0_float_func, \
-		default:   log0_func \
-	)(x0, y0, slope)
-
-# define exp0_eval(func, x) \
-	_Generic((func), \
-		exp0_double_func_st:   exp0_double_eval, \
-		exp0_float_func_st:    exp0_float_eval \
-	)(func, x)
-
-# define log0_eval(func, x) \
-	_Generic((func), \
-		exp0_double_func_st:   log0_double_eval, \
-		exp0_float_func_st:    log0_float_eval \
-	)(func, x)
-
-#endif // (EXP0_USE_DOUBLE && EXP0_PROVIDE_GENERICS)
-
 /******** Typedefs ********/
 
 #if EXP0_USE_DOUBLE
@@ -162,6 +118,52 @@ inline exp0_version_st exp0_version (void) {
 		EXP0_VERSION_BUILD,
 	};
 }
+
+/******** Generic Function Macros ********/
+
+#if (EXP0_USE_DOUBLE && EXP0_PROVIDE_GENERICS)
+
+# define exp0(x) \
+	_Generic((x), \
+		double:    exp0, \
+		float:     exp0f, \
+		default:   exp0 \
+	)(x)
+
+# define log0(x) \
+	_Generic((x), \
+		double:    log0, \
+		float:     log0f, \
+		default:   log0 \
+	)(x)
+
+# define exp0_func(x0, y0, slope) \
+	_Generic((x0)*(y0)*(slope), \
+		double:    exp0_double_func, \
+		float:     exp0_float_func, \
+		default:   exp0_func \
+	)(x0, y0, slope)
+
+# define log0_func(x0, y0, slope) \
+	_Generic((x0)*(y0)*(slope), \
+		double:    log0_double_func, \
+		float:     log0_float_func, \
+		default:   log0_func \
+	)(x0, y0, slope)
+
+# define exp0_eval(func, x) \
+	_Generic((func), \
+		exp0_double_func_st:   exp0_double_eval, \
+		exp0_float_func_st:    exp0_float_eval \
+	)(func, x)
+
+# define log0_eval(func, x) \
+	_Generic((func), \
+		exp0_double_func_st:   log0_double_eval, \
+		exp0_float_func_st:    log0_float_eval \
+	)(func, x)
+
+#endif // (EXP0_USE_DOUBLE && EXP0_PROVIDE_GENERICS)
 
 #endif // EXP0_H
 
