@@ -43,6 +43,20 @@
 
 #if (EXP0_USE_DOUBLE && EXP0_PROVIDE_GENERICS)
 
+# define exp0(x) \
+	_Generic((x), \
+		double:    exp0, \
+		float:     exp0f, \
+		default:   exp0 \
+	)(x)
+
+# define log0(x) \
+	_Generic((x), \
+		double:    log0, \
+		float:     log0f, \
+		default:   log0 \
+	)(x)
+
 # define exp0_func(x0, y0, slope) \
 	_Generic((x0)*(y0)*(slope), \
 		double:    exp0_double_func, \
@@ -103,6 +117,17 @@ typedef struct exp0_version {
 } exp0_version_st;
 
 /******** Function Prototypes ********/
+
+float    exp0f   (float    x);
+float    log0f   (float    x);
+
+#if EXP0_USE_DOUBLE
+double   exp0    (double   x);
+double   log0    (double   x);
+#elif EXP0_PROVIDE_GENERICS
+float    exp0    (float    x);
+float    log0    (float    x);
+#endif
 
 exp0_func_st
 exp0_func (exp0_default_kt x0, exp0_default_kt y0, exp0_default_kt slope);
