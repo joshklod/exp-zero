@@ -44,15 +44,15 @@
 #if (EXP0_USE_DOUBLE && EXP0_PROVIDE_GENERICS)
 # define exp0_func(x0, y0, slope) \
 	_Generic((x0)*(y0)*(slope), \
-		double:    exp0_func_double, \
-		float:     exp0_func_float, \
+		double:    exp0_double_func, \
+		float:     exp0_float_func, \
 		default:   exp0_func \
 	)(x0, y0, slope)
 
 # define exp0_eval(func, x) \
 	_Generic((func), \
-		exp0_func_double_st:   exp0_eval_double, \
-		exp0_func_float_st:    exp0_eval_float \
+		exp0_double_func_st:   exp0_double_eval, \
+		exp0_float_func_st:    exp0_float_eval \
 	)(func, x)
 #endif
 
@@ -70,15 +70,15 @@ typedef struct exp0_func {
 } exp0_func_st;
 
 #if EXP0_USE_DOUBLE
-typedef struct exp0_func_float {
+typedef struct exp0_float_func {
 	float   a;
 	float   b;
-} exp0_func_float_st;
+} exp0_float_func_st;
 
-typedef struct exp0_func_double {
+typedef struct exp0_double_func {
 	double   a;
 	double   b;
-} exp0_func_double_st;
+} exp0_double_func_st;
 #endif
 
 typedef struct exp0_version {
@@ -93,8 +93,8 @@ exp0_func_st
 exp0_func (exp0_default_kt x0, exp0_default_kt y0, exp0_default_kt slope);
 
 #if EXP0_USE_DOUBLE
-exp0_func_float_st    exp0_func_float    (float  x0, float  y0, float  slope);
-exp0_func_double_st   exp0_func_double   (double x0, double y0, double slope);
+exp0_float_func_st    exp0_float_func    (float  x0, float  y0, float  slope);
+exp0_double_func_st   exp0_double_func   (double x0, double y0, double slope);
 #endif
 
 #if !(EXP0_USE_DOUBLE && EXP0_PROVIDE_GENERICS)
@@ -102,8 +102,8 @@ exp0_default_kt exp0_eval (exp0_func_st func, exp0_default_kt x);
 #endif
 
 #if EXP0_USE_DOUBLE
-float    exp0_eval_float    (exp0_func_float_st    func, float    x);
-double   exp0_eval_double   (exp0_func_double_st   func, double   x);
+float    exp0_float_eval    (exp0_float_func_st    func, float    x);
+double   exp0_double_eval   (exp0_double_func_st   func, double   x);
 #endif
 
 /******** Inline Function Definitions ********/
