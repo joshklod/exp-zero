@@ -41,6 +41,9 @@
 #define EXP0_VERSION_MINOR   1
 #define EXP0_VERSION_BUILD   0
 
+#define EXP0_MCAT3__(a,b,c)  a ## b ## c
+#define EXP0_MCAT3_(a,b,c)   EXP0_MCAT3__(a,b,c)
+
 /******** Typedefs ********/
 
 #if EXP0_USE_DOUBLE
@@ -49,12 +52,8 @@ typedef EXP0_DEFAULT_TYPE   exp0_default_kt;
 typedef float               exp0_default_kt;
 #endif
 
-typedef struct exp0_func {
-	exp0_default_kt   a;
-	exp0_default_kt   b;
-} exp0_func_st;
-
 #if EXP0_USE_DOUBLE
+
 typedef struct exp0_float_func {
 	float   a;
 	float   b;
@@ -64,7 +63,17 @@ typedef struct exp0_double_func {
 	double   a;
 	double   b;
 } exp0_double_func_st;
-#endif
+
+typedef EXP0_MCAT3_(exp0_,EXP0_DEFAULT_TYPE,_func_st) exp0_func_st;
+
+#else
+
+typedef struct exp0_func {
+	exp0_default_kt   a;
+	exp0_default_kt   b;
+} exp0_func_st;
+
+#endif // !EXP0_USE_DOUBLE
 
 typedef struct exp0_version {
 	uint8_t    major;
